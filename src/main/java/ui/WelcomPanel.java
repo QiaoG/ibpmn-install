@@ -7,13 +7,13 @@ import javax.swing.*;
 * Date:2019/1/6
 * Time:12:29 PM
 */
-public class ContentPanel extends JPanel {
+public class WelcomPanel extends JPanel {
 
-    public ContentPanel(){
+    public WelcomPanel(){
         initUI();
     }
 
     private void initUI() {
-
+        this.add(new JLabel("welcome!"));
     }
 }

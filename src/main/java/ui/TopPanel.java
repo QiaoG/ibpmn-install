@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 /*
@@ -14,6 +15,7 @@ public class TopPanel extends JPanel {
     }
 
     private void initUI() {
-        this.setBackground(Color.yellow);
+        this.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+//        this.setBackground(Color.yellow);
     }
 }

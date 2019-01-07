@@ -5,6 +5,7 @@ import event.StatusChangeEvent;
 import pm.InstallStatus;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
@@ -20,22 +21,33 @@ public class RightPanel extends JPanel implements IStatusChangeListener{
         initUI();
     }
 
+    private CardLayout cardLayout;
+
+    private int currentIndex;
+
     private void initUI() {
-        this.setBackground(Color.BLUE);
-//        GroupLayout gl = new GroupLayout(this);
-//        this.setLayout(gl);
-        CardLayout cl = new CardLayout();
+        this.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+        cardLayout = new CardLayout();
 
-        this.setLayout(cl);
-//        gl.setAutoCreateGaps(true);
-//        gl.setAutoCreateContainerGaps(true);
+        this.setLayout(cardLayout);
 
-
+        this.add(new WelcomPanel());
+        this.add(new LicencePanel());
+        this.add(new FunctionPanel());
+        this.add(new DBPanel());
+        this.add(new ProcessPanel());
+        this.add(new CompletePanel());
 
     }
 
     @Override
     public void handle(StatusChangeEvent event) {
-
+        if(event.getStatus() > currentIndex){
+            cardLayout.next(this);
+            currentIndex++;
+        }else {
+            cardLayout.previous(this);
+            currentIndex--;
+        }
     }
 }

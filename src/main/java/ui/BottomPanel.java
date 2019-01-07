@@ -3,6 +3,7 @@ package ui;
 import pm.InstallStatus;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 
 import java.awt.event.ActionEvent;
 
@@ -20,10 +21,11 @@ public class BottomPanel extends JPanel {
     }
 
     private void initUI() {
+//        this.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         GroupLayout gl = new GroupLayout(this);
         this.setLayout(gl);
 
-        gl.setAutoCreateGaps(true);
+        gl.setAutoCreateGaps(false);
         gl.setAutoCreateContainerGaps(true);
 
         JButton preButton = new JButton("上一页");
@@ -38,13 +40,10 @@ public class BottomPanel extends JPanel {
                 .addComponent(closeButton)
         );
 
-        gl.setVerticalGroup(gl.createSequentialGroup()
-                .addPreferredGap(RELATED,
-                        GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(gl.createParallelGroup()
-                        .addComponent(preButton)
-                        .addComponent(nextButton)
-                        .addComponent(closeButton))
+        gl.setVerticalGroup(gl.createParallelGroup()
+                .addComponent(preButton)
+                .addComponent(nextButton)
+                .addComponent(closeButton)
         );
 
         preButton.addActionListener((ActionEvent event) -> {
@@ -53,6 +52,13 @@ public class BottomPanel extends JPanel {
 
         nextButton.addActionListener((ActionEvent event) -> {
             InstallStatus.getInstance().next();
+        });
+
+        closeButton.addActionListener((ActionEvent event) -> {
+            int option = JOptionPane.showConfirmDialog(null, "确定退出系统? ", "提示 ", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if (option == JOptionPane.OK_OPTION) {
+                System.exit(0);
+            }
         });
     }
 }

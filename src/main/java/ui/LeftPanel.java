@@ -5,11 +5,14 @@ import event.StatusChangeEvent;
 import pm.InstallStatus;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
+import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
 /*
 * Author GQ
@@ -26,7 +29,7 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
     private boolean lock;
 
     private void initUI() {
-//        this.setBackground(Color.CYAN);
+        this.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         GroupLayout gl = new GroupLayout(this);
         this.setLayout(gl);
 
@@ -35,7 +38,6 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
 
         ButtonGroup bg = new ButtonGroup();
         int stepc = InstallStatus.STEPS.length;
-//        JRadioButton[] jbs = new JRadioButton[stepc];
         for(int i = 0; i < stepc; i++){
             jbs[i] = new JRadioButton(InstallStatus.STEPS[i]);
             jbs[i].addChangeListener(this);
@@ -52,6 +54,8 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
         for(int i = 0; i < stepc; i++){
             sg.addComponent(jbs[i]);
         }
+        sg.addPreferredGap(RELATED,
+                GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE);
         gl.setVerticalGroup(sg);
 
         jbs[0].setSelected(true);
@@ -76,6 +80,13 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
 
     @Override
     public void handle(StatusChangeEvent event) {
+        for(int i = 0; i < jbs.length; i++){
+            if(i < event.getStatus()){
+                jbs[i].setEnabled(false);
+            }else{
+                jbs[i].setEnabled(true);
+            }
+        }
         jbs[event.getStatus()].setSelected(true);
     }
 }
