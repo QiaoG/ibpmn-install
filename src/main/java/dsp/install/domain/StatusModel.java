@@ -1,7 +1,7 @@
-package domain;
+package dsp.install.domain;
 
-import event.IStatusChangeListener;
-import event.StatusChangeEvent;
+import dsp.install.event.IStatusChangeListener;
+import dsp.install.event.StatusChangeEvent;
 import lombok.Data;
 import lombok.Getter;
 

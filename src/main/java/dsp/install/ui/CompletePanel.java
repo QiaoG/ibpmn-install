@@ -1,4 +1,4 @@
-package ui;
+package dsp.install.ui;
 
 import javax.swing.*;
 

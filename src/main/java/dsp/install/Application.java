@@ -1,4 +1,6 @@
-import ui.MainFrame;
+package dsp.install;
+
+import dsp.install.ui.MainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +10,7 @@ import java.awt.*;
 * Date:2018/12/31
 * Time:11:07 AM
 */
-public class InstallApplication {
+public class Application {
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
 

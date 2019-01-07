@@ -1,4 +1,4 @@
-package event;
+package dsp.install.event;
 
 /*
 * Author GQ

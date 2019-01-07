@@ -2,6 +2,8 @@ group 'ibpmn'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
+mainClassName = "dsp.install.Application"
 
 sourceCompatibility = 1.8
 

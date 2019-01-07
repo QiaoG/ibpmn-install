@@ -1,6 +1,6 @@
-package ui;
+package dsp.install.ui;
 
-import domain.StatusModel;
+import dsp.install.domain.StatusModel;
 
 import javax.swing.*;
 

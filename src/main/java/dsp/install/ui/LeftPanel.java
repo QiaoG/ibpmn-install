@@ -1,8 +1,8 @@
-package ui;
+package dsp.install.ui;
 
-import event.IStatusChangeListener;
-import event.StatusChangeEvent;
-import domain.StatusModel;
+import dsp.install.event.IStatusChangeListener;
+import dsp.install.event.StatusChangeEvent;
+import dsp.install.domain.StatusModel;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
