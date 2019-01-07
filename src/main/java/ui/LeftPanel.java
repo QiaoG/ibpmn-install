@@ -2,15 +2,13 @@ package ui;
 
 import event.IStatusChangeListener;
 import event.StatusChangeEvent;
-import pm.InstallStatus;
+import domain.StatusModel;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.*;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
@@ -22,9 +20,10 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeListener{
     public LeftPanel(){
         initUI();
+        StatusModel.getInstance().registeListener(this);
     }
 
-    private JRadioButton[] jbs = new JRadioButton[InstallStatus.STEPS.length];
+    private JRadioButton[] jbs = new JRadioButton[StatusModel.STEPS.length];
 
     private boolean lock;
 
@@ -37,9 +36,9 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
         gl.setAutoCreateContainerGaps(true);
 
         ButtonGroup bg = new ButtonGroup();
-        int stepc = InstallStatus.STEPS.length;
+        int stepc = StatusModel.STEPS.length;
         for(int i = 0; i < stepc; i++){
-            jbs[i] = new JRadioButton(InstallStatus.STEPS[i]);
+            jbs[i] = new JRadioButton(StatusModel.STEPS[i]);
             jbs[i].addChangeListener(this);
             bg.add(jbs[i]);
         }
@@ -59,7 +58,7 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
         gl.setVerticalGroup(sg);
 
         jbs[0].setSelected(true);
-        InstallStatus.getInstance().registeListener(this);
+
     }
 
     @Override
@@ -69,13 +68,13 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
             lock = false;
         }else {
             lock = true;
-            jbs[InstallStatus.getInstance().getCurrentStatus()].setSelected(true);
+            jbs[StatusModel.getInstance().getCurrentStatus()].setSelected(true);
         }
     }
 
     //@Override
     public void itemStateChanged(ItemEvent e) {
-        jbs[InstallStatus.getInstance().getCurrentStatus()].setSelected(true);
+        jbs[StatusModel.getInstance().getCurrentStatus()].setSelected(true);
     }
 
     @Override

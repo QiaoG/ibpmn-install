@@ -1,4 +1,4 @@
-package pm;
+package domain;
 
 import event.IStatusChangeListener;
 import event.StatusChangeEvent;
@@ -14,19 +14,19 @@ import java.util.List;
 * Time:11:43 AM
 */
 @Data
-public class InstallStatus {
+public class StatusModel {
     @Getter
-    private static InstallStatus instance;
+    private static StatusModel instance;
 
     public static String[] STEPS = {"欢迎使用","许可协议","安装选项","收集配置","安装进度","安装完成"};
 
-    private InstallStatus(){
+    private StatusModel(){
 
     }
 
-    public static InstallStatus getInstance(){
+    public static StatusModel getInstance(){
         if(instance == null){
-            instance = new InstallStatus();
+            instance = new StatusModel();
         }
         return instance;
     }

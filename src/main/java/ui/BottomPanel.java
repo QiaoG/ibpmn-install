@@ -1,9 +1,8 @@
 package ui;
 
-import pm.InstallStatus;
+import domain.StatusModel;
 
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 
 import java.awt.event.ActionEvent;
 
@@ -47,11 +46,11 @@ public class BottomPanel extends JPanel {
         );
 
         preButton.addActionListener((ActionEvent event) -> {
-            InstallStatus.getInstance().previous();
+            StatusModel.getInstance().previous();
         });
 
         nextButton.addActionListener((ActionEvent event) -> {
-            InstallStatus.getInstance().next();
+            StatusModel.getInstance().next();
         });
 
         closeButton.addActionListener((ActionEvent event) -> {

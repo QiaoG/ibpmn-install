@@ -2,13 +2,11 @@ package ui;
 
 import event.IStatusChangeListener;
 import event.StatusChangeEvent;
-import pm.InstallStatus;
+import domain.StatusModel;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
-
-import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
 /*
 * Author GQ
@@ -17,8 +15,8 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 */
 public class RightPanel extends JPanel implements IStatusChangeListener{
     public RightPanel(){
-        InstallStatus.getInstance().registeListener(this);
         initUI();
+        StatusModel.getInstance().registeListener(this);
     }
 
     private CardLayout cardLayout;
