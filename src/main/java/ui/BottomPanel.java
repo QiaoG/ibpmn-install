@@ -1,6 +1,10 @@
 package ui;
 
+import pm.InstallStatus;
+
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
@@ -42,5 +46,13 @@ public class BottomPanel extends JPanel {
                         .addComponent(nextButton)
                         .addComponent(closeButton))
         );
+
+        preButton.addActionListener((ActionEvent event) -> {
+            InstallStatus.getInstance().previous();
+        });
+
+        nextButton.addActionListener((ActionEvent event) -> {
+            InstallStatus.getInstance().next();
+        });
     }
 }

@@ -11,8 +11,8 @@ public class Model {
 
     public final int W_WIDE = 800;
     public final int W_HIGHT = 600;
-    public final int TOP_HIGHT = 100;
-    public final int LEFT_WIDE = 250;
+    public final int TOP_HIGHT = 80;
+    public final int LEFT_WIDE = 100;
     public final int BOTTOM_HIGHT = 40;
 
     private Model(){
