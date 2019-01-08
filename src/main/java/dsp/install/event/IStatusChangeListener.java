@@ -7,5 +7,5 @@ package dsp.install.event;
 */
 public interface IStatusChangeListener {
 
-    public void handle(StatusChangeEvent event);
+    public void handleStatusChanged(StatusChangeEvent event);
 }

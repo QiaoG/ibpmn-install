@@ -78,7 +78,7 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
     }
 
     @Override
-    public void handle(StatusChangeEvent event) {
+    public void handleStatusChanged(StatusChangeEvent event) {
         for(int i = 0; i < jbs.length; i++){
             if(i < event.getStatus()){
                 jbs[i].setEnabled(false);

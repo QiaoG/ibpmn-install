@@ -53,7 +53,7 @@ public class StatusModel {
 
     public void fireListener(){
         for(IStatusChangeListener listener : listeners){
-            listener.handle(new StatusChangeEvent(getCurrentStatus()));
+            listener.handleStatusChanged(new StatusChangeEvent(getCurrentStatus()));
         }
     }
 

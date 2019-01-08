@@ -39,7 +39,7 @@ public class RightPanel extends JPanel implements IStatusChangeListener{
     }
 
     @Override
-    public void handle(StatusChangeEvent event) {
+    public void handleStatusChanged(StatusChangeEvent event) {
         if(event.getStatus() > currentIndex){
             cardLayout.next(this);
             currentIndex++;
@@ -47,5 +47,6 @@ public class RightPanel extends JPanel implements IStatusChangeListener{
             cardLayout.previous(this);
             currentIndex--;
         }
+        if (currentIndex == 1) ((LicencePanel) this.getComponent(1)).changeLicence();
     }
 }

@@ -1,6 +1,9 @@
 package dsp.install.ui;
 
 import dsp.install.domain.StatusModel;
+import dsp.install.event.Event;
+import dsp.install.event.EventBus;
+import dsp.install.event.IEventListener;
 
 import javax.swing.*;
 
@@ -13,11 +16,14 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 * Date:2019/1/6
 * Time:5:13 PM
 */
-public class BottomPanel extends JPanel {
+public class BottomPanel extends JPanel implements IEventListener{
 
     public BottomPanel() {
         initUI();
+        EventBus.getInstance().registeListener(this);
     }
+
+    private JButton preButton,nextButton;
 
     private void initUI() {
 //        this.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
@@ -27,8 +33,8 @@ public class BottomPanel extends JPanel {
         gl.setAutoCreateGaps(false);
         gl.setAutoCreateContainerGaps(true);
 
-        JButton preButton = new JButton("上一页");
-        JButton nextButton = new JButton("下一页");
+        preButton = new JButton("上一页");
+        nextButton = new JButton("下一页");
         JButton closeButton = new JButton("关闭");
 
         gl.setHorizontalGroup(gl.createSequentialGroup()
@@ -59,5 +65,11 @@ public class BottomPanel extends JPanel {
                 System.exit(0);
             }
         });
+    }
+
+    @Override
+    public void handleEvent(Event event) {
+        if(event.getType() != 0) return;
+        nextButton.setEnabled((Boolean) event.getValue());
     }
 }
