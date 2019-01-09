@@ -58,6 +58,7 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
         gl.setVerticalGroup(sg);
 
         jbs[0].setSelected(true);
+        updateState(0);
 
     }
 
@@ -79,13 +80,17 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
 
     @Override
     public void handleStatusChanged(StatusChangeEvent event) {
+        updateState(event.getStatus());
+        jbs[event.getStatus()].setSelected(true);
+    }
+
+    private void updateState(int index){
         for(int i = 0; i < jbs.length; i++){
-            if(i < event.getStatus()){
-                jbs[i].setEnabled(false);
-            }else{
+            if(i == index){
                 jbs[i].setEnabled(true);
+            }else{
+                jbs[i].setEnabled(false);
             }
         }
-        jbs[event.getStatus()].setSelected(true);
     }
 }

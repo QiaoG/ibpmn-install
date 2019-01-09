@@ -12,7 +12,7 @@ import java.awt.*;
 * Date:2019/1/7
 * Time:4:51 PM
 */
-public class LicencePanel extends JPanel {
+public class LicencePanel extends DspPanel {
 
     public LicencePanel() {
         initUI();
@@ -71,5 +71,10 @@ public class LicencePanel extends JPanel {
 
     public void changeLicence(){
         EventBus.getInstance().fireListeners(new Event(0,"ok".equals(bg.getSelection().getActionCommand())));
+    }
+
+    @Override
+    public void showMe(){
+        changeLicence();
     }
 }

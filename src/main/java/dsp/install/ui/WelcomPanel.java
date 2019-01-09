@@ -7,7 +7,7 @@ import javax.swing.*;
 * Date:2019/1/6
 * Time:12:29 PM
 */
-public class WelcomPanel extends JPanel {
+public class WelcomPanel extends DspPanel {
 
     public WelcomPanel(){
         initUI();
@@ -15,5 +15,10 @@ public class WelcomPanel extends JPanel {
 
     private void initUI() {
         this.add(new JLabel("welcome!"));
+    }
+
+    @Override
+    public void showMe(){
+
     }
 }

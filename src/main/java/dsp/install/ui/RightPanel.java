@@ -47,6 +47,7 @@ public class RightPanel extends JPanel implements IStatusChangeListener{
             cardLayout.previous(this);
             currentIndex--;
         }
-        if (currentIndex == 1) ((LicencePanel) this.getComponent(1)).changeLicence();
+//        if (currentIndex == 1) ((LicencePanel) this.getComponent(1)).changeLicence();
+        ((DspPanel)this.getComponent(currentIndex)).showMe();
     }
 }
