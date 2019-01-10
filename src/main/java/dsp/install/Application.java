@@ -5,7 +5,7 @@ import dsp.install.ui.MainFrame;
 import javax.swing.*;
 import java.awt.*;
 
-/*
+/**
 * Author GQ
 * Date:2018/12/31
 * Time:11:07 AM

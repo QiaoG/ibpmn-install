@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 
 import static javax.swing.GroupLayout.Alignment.BASELINE;
 import static javax.swing.GroupLayout.Alignment.TRAILING;
@@ -39,19 +40,23 @@ public class DBPanel extends DspPanel {
         configPanel.add(getMysqlPanel());
         configPanel.add(getOraclePanel());
 
-        mysql.addChangeListener((ChangeEvent event) -> {
-            cardLayout.first(configPanel);
+        mysql.addItemListener((ItemEvent event) -> {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                cardLayout.first(configPanel);
+            }
         });
-        oracle.addChangeListener((ChangeEvent event) -> {
-            cardLayout.last(configPanel);
+        oracle.addItemListener((ItemEvent event) -> {
+            if (event.getStateChange() == ItemEvent.SELECTED) {
+                cardLayout.last(configPanel);
+            }
         });
 
         gl.setHorizontalGroup(gl.createParallelGroup()
                 .addGroup(gl.createSequentialGroup()
-                        .addPreferredGap(RELATED,GroupLayout.DEFAULT_SIZE,Short.MAX_VALUE)
+                        .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(mysql)
                         .addComponent(oracle)
-                        .addPreferredGap(RELATED,GroupLayout.DEFAULT_SIZE,Short.MAX_VALUE))
+                        .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addComponent(configPanel)
         );
 
@@ -67,7 +72,7 @@ public class DBPanel extends DspPanel {
         JPanel panel = getConfigPanel();
         GroupLayout gl = (GroupLayout) panel.getLayout();
         JLabel type = new JLabel("数据库类型：");
-        JTextField typeField = new JTextField(10);
+        JTextField typeField = new JTextField("MYSQL", 10);
         JLabel ip = new JLabel("数据库IP地址：");
         JTextField ipField = new JTextField(10);
         JLabel name = new JLabel("数据库名称：");
@@ -77,7 +82,7 @@ public class DBPanel extends DspPanel {
         JLabel password = new JLabel("用户密码：");
         JTextField passwordFiled = new JTextField(10);
         gl.setHorizontalGroup(gl.createSequentialGroup()
-                .addPreferredGap(RELATED,GroupLayout.DEFAULT_SIZE,Short.MAX_VALUE)
+                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(gl.createParallelGroup(TRAILING)
                         .addComponent(type)
                         .addComponent(ip)
@@ -90,7 +95,7 @@ public class DBPanel extends DspPanel {
                         .addComponent(nameField)
                         .addComponent(userField)
                         .addComponent(passwordFiled))
-                .addPreferredGap(RELATED,GroupLayout.DEFAULT_SIZE,Short.MAX_VALUE)
+                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
@@ -116,6 +121,59 @@ public class DBPanel extends DspPanel {
     private JPanel getOraclePanel() {
         JPanel panel = getConfigPanel();
         GroupLayout gl = (GroupLayout) panel.getLayout();
+        JLabel type = new JLabel("数据库类型：");
+        JTextField typeField = new JTextField("ORACLE", 6);
+        JLabel ip = new JLabel("主机名(IP)：");
+        JTextField ipField = new JTextField(6);
+        JLabel name = new JLabel("服务名：");
+        JTextField nameField = new JTextField(6);
+        JLabel login = new JLabel("登录：");
+        JLabel user = new JLabel("用户:");
+        JTextField userField = new JTextField(5);
+        JLabel password = new JLabel("口令:");
+        JTextField passwordFiled = new JTextField(5);
+        gl.setHorizontalGroup(gl.createSequentialGroup()
+                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(gl.createParallelGroup(TRAILING)
+                        .addComponent(type)
+                        .addComponent(ip)
+                        .addComponent(name)
+                        .addComponent(login))
+                .addGroup(gl.createParallelGroup()
+                        .addComponent(typeField)
+                        .addComponent(ipField)
+                        .addComponent(nameField)
+                        .addGroup(gl.createSequentialGroup()
+                                .addComponent(user)
+                                .addComponent(userField)
+                                .addComponent(password)
+                                .addComponent(passwordFiled)
+                        )
+                )
+                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        gl.setVerticalGroup(gl.createSequentialGroup()
+                .addGroup(gl.createParallelGroup(BASELINE)
+                        .addComponent(type)
+                        .addComponent(typeField))
+                .addGroup(gl.createParallelGroup(BASELINE)
+                        .addComponent(ip)
+                        .addComponent(ipField))
+                .addGroup(gl.createParallelGroup(BASELINE)
+                        .addComponent(name)
+                        .addComponent(nameField))
+                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, 20)
+                .addGroup(gl.createParallelGroup(BASELINE)
+                        .addComponent(login)
+                        .addGroup(gl.createParallelGroup(BASELINE)
+                                .addComponent(user)
+                                .addComponent(userField)
+                                .addComponent(password)
+                                .addComponent(passwordFiled)
+                        )
+                )
+        );
         return panel;
     }
 
@@ -130,7 +188,7 @@ public class DBPanel extends DspPanel {
     }
 
     @Override
-    public void showMe(){
+    public void showMe() {
 
     }
 }

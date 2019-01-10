@@ -9,8 +9,8 @@ public class PerformanceModel {
 
     private static PerformanceModel instance;
 
-    public final int W_WIDE = 800;
-    public final int W_HIGHT = 600;
+    public final int W_WIDE = 600;
+    public final int W_HIGHT = 500;
     public final int TOP_HIGHT = 80;
     public final int LEFT_WIDE = 100;
     public final int BOTTOM_HIGHT = 40;
