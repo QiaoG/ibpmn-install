@@ -28,42 +28,43 @@ public class DBPanel extends DspPanel {
         gl.setAutoCreateContainerGaps(true);
 
         ButtonGroup bg = new ButtonGroup();
-        JRadioButton mysql = new JRadioButton("mysql", true);
-        JRadioButton oracle = new JRadioButton("oracle");
-        bg.add(mysql);
+        JRadioButton oracle = new JRadioButton("oracle",true);
+        JRadioButton mysql = new JRadioButton("mysql");
         bg.add(oracle);
+        bg.add(mysql);
 
         JPanel configPanel = new JPanel();
         configPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         CardLayout cardLayout = new CardLayout();
         configPanel.setLayout(cardLayout);
-        configPanel.add(getMysqlPanel());
+
         configPanel.add(getOraclePanel());
+        configPanel.add(getMysqlPanel());
 
         mysql.addItemListener((ItemEvent event) -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                cardLayout.first(configPanel);
+                cardLayout.last(configPanel);
             }
         });
         oracle.addItemListener((ItemEvent event) -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
-                cardLayout.last(configPanel);
+                cardLayout.first(configPanel);
             }
         });
 
         gl.setHorizontalGroup(gl.createParallelGroup()
                 .addGroup(gl.createSequentialGroup()
                         .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(mysql)
                         .addComponent(oracle)
+                        .addComponent(mysql)
                         .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addComponent(configPanel)
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
                 .addGroup(gl.createParallelGroup()
-                        .addComponent(mysql)
-                        .addComponent(oracle))
+                        .addComponent(oracle)
+                        .addComponent(mysql))
                 .addComponent(configPanel)
         );
     }
@@ -71,15 +72,18 @@ public class DBPanel extends DspPanel {
     private JPanel getMysqlPanel() {
         JPanel panel = getConfigPanel();
         GroupLayout gl = (GroupLayout) panel.getLayout();
-        JLabel type = new JLabel("数据库类型：");
-        JTextField typeField = new JTextField("MYSQL", 10);
-        JLabel ip = new JLabel("数据库IP地址：");
+        JLabel type = new JLabel("类型：");
+        JLabel typeField = new JLabel("MYSQL");
+        JLabel ip = new JLabel("主机名(IP)：");
         JTextField ipField = new JTextField(10);
+        JLabel port = new JLabel("端口:");
+        JTextField portField = new JTextField("3306",4);
         JLabel name = new JLabel("数据库名称：");
         JTextField nameField = new JTextField(10);
-        JLabel user = new JLabel("用户名：");
+        JLabel login = new JLabel("认证：");
+        JLabel user = new JLabel("用户名:");
         JTextField userField = new JTextField(10);
-        JLabel password = new JLabel("用户密码：");
+        JLabel password = new JLabel("密码:");
         JTextField passwordFiled = new JTextField(10);
         gl.setHorizontalGroup(gl.createSequentialGroup()
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -91,23 +95,37 @@ public class DBPanel extends DspPanel {
                         .addComponent(password))
                 .addGroup(gl.createParallelGroup()
                         .addComponent(typeField)
-                        .addComponent(ipField)
-                        .addComponent(nameField)
-                        .addComponent(userField)
-                        .addComponent(passwordFiled))
+                        .addGroup(gl.createSequentialGroup()
+                                .addComponent(ipField,-1,-1,-2)
+                                .addGap(20)
+                                .addComponent(port)
+                                .addComponent(portField,-1,-1,-2)
+                        )
+                        .addComponent(nameField,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE)
+                        .addComponent(userField,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordFiled,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(type)
-                        .addComponent(typeField))
+                        .addComponent(typeField)
+                )
+                .addGap(20)
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(ip)
-                        .addComponent(ipField))
+                        .addGroup(gl.createParallelGroup(BASELINE)
+                                .addComponent(ipField)
+                                .addGap(10)
+                                .addComponent(port)
+                                .addComponent(portField)
+                        )
+                )
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(name)
                         .addComponent(nameField))
+                .addGap(20)
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(user)
                         .addComponent(userField))
@@ -121,34 +139,38 @@ public class DBPanel extends DspPanel {
     private JPanel getOraclePanel() {
         JPanel panel = getConfigPanel();
         GroupLayout gl = (GroupLayout) panel.getLayout();
-        JLabel type = new JLabel("数据库类型：");
-        JTextField typeField = new JTextField("ORACLE", 6);
+        JLabel type = new JLabel("类型：");
+        JLabel typeField = new JLabel("ORACLE");
         JLabel ip = new JLabel("主机名(IP)：");
-        JTextField ipField = new JTextField(6);
+        JTextField ipField = new JTextField(10);
+        JLabel port = new JLabel("端口:");
+        JTextField portField = new JTextField("1521",4);
         JLabel name = new JLabel("服务名：");
-        JTextField nameField = new JTextField(6);
-        JLabel login = new JLabel("登录：");
-        JLabel user = new JLabel("用户:");
-        JTextField userField = new JTextField(5);
+        JTextField nameField = new JTextField(10);
+        JLabel login = new JLabel("认证：");
+        //JLabel user = new JLabel("账号:");
+        JTextField userField = new JTextField(10);
         JLabel password = new JLabel("口令:");
-        JTextField passwordFiled = new JTextField(5);
+        JTextField passwordFiled = new JTextField(10);
         gl.setHorizontalGroup(gl.createSequentialGroup()
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(gl.createParallelGroup(TRAILING)
                         .addComponent(type)
                         .addComponent(ip)
                         .addComponent(name)
-                        .addComponent(login))
+                        .addComponent(login)
+                        .addComponent(password))
                 .addGroup(gl.createParallelGroup()
                         .addComponent(typeField)
-                        .addComponent(ipField)
-                        .addComponent(nameField)
                         .addGroup(gl.createSequentialGroup()
-                                .addComponent(user)
-                                .addComponent(userField)
-                                .addComponent(password)
-                                .addComponent(passwordFiled)
+                                .addComponent(ipField,-1,-1,-2)
+                                .addGap(20)
+                                .addComponent(port)
+                                .addComponent(portField,-1,-1,-2)
                         )
+                        .addComponent(nameField,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE)
+                        .addComponent(userField,-1,-1,-2)
+                        .addComponent(passwordFiled,-1,-1,-2)
                 )
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -157,21 +179,27 @@ public class DBPanel extends DspPanel {
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(type)
                         .addComponent(typeField))
+                .addGap(20)
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(ip)
-                        .addComponent(ipField))
+                        .addGroup(gl.createParallelGroup(BASELINE)
+                                .addComponent(ipField)
+                                .addComponent(port)
+                                .addComponent(portField)
+                        )
+                )
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(name)
-                        .addComponent(nameField))
+                        .addComponent(nameField)
+                )
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, 20)
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(login)
-                        .addGroup(gl.createParallelGroup(BASELINE)
-                                .addComponent(user)
-                                .addComponent(userField)
-                                .addComponent(password)
-                                .addComponent(passwordFiled)
-                        )
+                        .addComponent(userField)
+                )
+                .addGroup(gl.createParallelGroup(BASELINE)
+                        .addComponent(password)
+                        .addComponent(passwordFiled)
                 )
         );
         return panel;
