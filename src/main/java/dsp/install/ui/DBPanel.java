@@ -20,7 +20,15 @@ public class DBPanel extends DspPanel {
         initUI();
     }
 
+    private int FIELD_WIDTH = 20;
+    private int FIELD_WIDTH2 = 6;
+
     private void initUI() {
+        String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+        System.out.println(lookAndFeel);
+
+        int fieldWidth = 10*1;
+
         GroupLayout gl = new GroupLayout(this);
         this.setLayout(gl);
 
@@ -75,16 +83,16 @@ public class DBPanel extends DspPanel {
         JLabel type = new JLabel("类型：");
         JLabel typeField = new JLabel("MYSQL");
         JLabel ip = new JLabel("主机名(IP)：");
-        JTextField ipField = new JTextField(10);
+        JTextField ipField = new JTextField(FIELD_WIDTH);
         JLabel port = new JLabel("端口:");
-        JTextField portField = new JTextField("3306",4);
+        JTextField portField = new JTextField("3306",FIELD_WIDTH2);
         JLabel name = new JLabel("数据库名称：");
-        JTextField nameField = new JTextField(10);
+        JTextField nameField = new JTextField(FIELD_WIDTH);
         JLabel login = new JLabel("认证：");
-        JLabel user = new JLabel("用户名:");
-        JTextField userField = new JTextField(10);
-        JLabel password = new JLabel("密码:");
-        JTextField passwordFiled = new JTextField(10);
+        JLabel user = new JLabel("用户名：");
+        JTextField userField = new JTextField(FIELD_WIDTH);
+        JLabel password = new JLabel("密码：");
+        JTextField passwordFiled = new JTextField(FIELD_WIDTH);
         gl.setHorizontalGroup(gl.createSequentialGroup()
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(gl.createParallelGroup(TRAILING)
@@ -142,16 +150,16 @@ public class DBPanel extends DspPanel {
         JLabel type = new JLabel("类型：");
         JLabel typeField = new JLabel("ORACLE");
         JLabel ip = new JLabel("主机名(IP)：");
-        JTextField ipField = new JTextField(10);
+        JTextField ipField = new JTextField(FIELD_WIDTH);
         JLabel port = new JLabel("端口:");
-        JTextField portField = new JTextField("1521",4);
+        JTextField portField = new JTextField("1521",FIELD_WIDTH2);
         JLabel name = new JLabel("服务名：");
-        JTextField nameField = new JTextField(10);
+        JTextField nameField = new JTextField(FIELD_WIDTH);
         JLabel login = new JLabel("认证：");
         //JLabel user = new JLabel("账号:");
-        JTextField userField = new JTextField(10);
-        JLabel password = new JLabel("口令:");
-        JTextField passwordFiled = new JTextField(10);
+        JTextField userField = new JTextField(FIELD_WIDTH);
+        JLabel password = new JLabel("口令：");
+        JTextField passwordFiled = new JTextField(FIELD_WIDTH);
         gl.setHorizontalGroup(gl.createSequentialGroup()
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(gl.createParallelGroup(TRAILING)

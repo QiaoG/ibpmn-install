@@ -12,6 +12,30 @@ import java.awt.event.WindowEvent;
 */
 public class MainFrame extends JFrame {
     public MainFrame() {
+        String lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+        String lookAndFeel2 = UIManager.getCrossPlatformLookAndFeelClassName();
+        try {
+            UIManager.setLookAndFeel(lookAndFeel);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (UnsupportedLookAndFeelException e) {
+            try {
+                UIManager.setLookAndFeel(lookAndFeel2);
+            } catch (ClassNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (InstantiationException e1) {
+                e1.printStackTrace();
+            } catch (IllegalAccessException e1) {
+                e1.printStackTrace();
+            } catch (UnsupportedLookAndFeelException e1) {
+                e1.printStackTrace();
+            }
+        }
+        //UIManager.setLookAndFeel(lookAndFeel);
         initUI();
         this.addWindowListener(new WindowAdapter() {
             @Override
