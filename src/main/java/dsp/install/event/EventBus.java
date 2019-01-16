@@ -3,7 +3,7 @@ package dsp.install.event;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
 * Author GQ
 * Date:2018/12/31
 * Time:11:50 AM
@@ -24,9 +24,9 @@ public class EventBus {
 
     private List<IEventListener> listeners = new ArrayList<>();
 
-    public void fireListeners(Event event){
+    public void fireListeners(DspEvent dspEvent){
         for (IEventListener listener : listeners) {
-            listener.handleEvent(event);
+            listener.handleEvent(dspEvent);
         }
     }
 

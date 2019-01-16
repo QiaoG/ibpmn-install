@@ -3,7 +3,7 @@ package dsp.install.ui;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
-/*
+/**
 * Author GQ
 * Date:2018/12/31
 * Time:11:31 AM

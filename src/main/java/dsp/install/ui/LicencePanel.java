@@ -1,13 +1,13 @@
 package dsp.install.ui;
 
-import dsp.install.event.Event;
+import dsp.install.event.DspEvent;
 import dsp.install.event.EventBus;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import java.awt.*;
 
-/*
+/**
 * Author GQ
 * Date:2019/1/7
 * Time:4:51 PM
@@ -39,12 +39,12 @@ public class LicencePanel extends DspPanel {
         area.setWrapStyleWord(true);
 
         bg = new ButtonGroup();
-        JRadioButton accept = new JRadioButton("我接受该许可协议的条款");
+        JRadioButton accept = new JRadioButton("我接受该许可协议的条款",PerformanceModel.getInstance().getProfile()==0?true:false);
         accept.setActionCommand("ok");
         accept.addChangeListener((ChangeEvent event) -> {
             LicencePanel.this.changeLicence();
         });
-        JRadioButton notaccept = new JRadioButton("我不接受该许可协议的条款",true);
+        JRadioButton notaccept = new JRadioButton("我不接受该许可协议的条款",PerformanceModel.getInstance().getProfile()==0?false:true);
         notaccept.setActionCommand("not");
         notaccept.addChangeListener((ChangeEvent event) -> {
             LicencePanel.this.changeLicence();
@@ -70,7 +70,7 @@ public class LicencePanel extends DspPanel {
     }
 
     public void changeLicence(){
-        EventBus.getInstance().fireListeners(new Event(0,"ok".equals(bg.getSelection().getActionCommand())));
+        EventBus.getInstance().fireListeners(new DspEvent(0,"ok".equals(bg.getSelection().getActionCommand())));
     }
 
     @Override

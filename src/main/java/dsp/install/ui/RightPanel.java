@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 
-/*
+/**
 * Author GQ
 * Date:2018/12/31
 * Time:11:33 AM
@@ -31,7 +31,7 @@ public class RightPanel extends JPanel implements IStatusChangeListener{
 
         this.add(new WelcomPanel());
         this.add(new LicencePanel());
-        this.add(new FunctionPanel());
+        //this.add(new FunctionPanel());
         this.add(new DBPanel());
         this.add(new ProcessPanel());
         this.add(new CompletePanel());

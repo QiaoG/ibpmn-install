@@ -2,7 +2,7 @@ package dsp.install.ui;
 
 import javax.swing.*;
 
-/*
+/**
 * Author GQ
 * Date:2019/1/7
 * Time:4:54 PM

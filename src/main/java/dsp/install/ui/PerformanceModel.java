@@ -1,6 +1,8 @@
 package dsp.install.ui;
 
-/*
+import lombok.Getter;
+
+/**
 * Author GQ
 * Date:2018/12/31
 * Time:11:40 AM
@@ -14,6 +16,9 @@ public class PerformanceModel {
     public final int TOP_HIGHT = 80;
     public final int LEFT_WIDE = 100;
     public final int BOTTOM_HIGHT = 40;
+
+    @Getter
+    private int profile = 0;
 
     private PerformanceModel(){
 

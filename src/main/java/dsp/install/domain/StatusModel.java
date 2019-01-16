@@ -8,7 +8,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
 * Author GQ
 * Date:2019/1/6
 * Time:11:43 AM
@@ -18,7 +18,8 @@ public class StatusModel {
     @Getter
     private static StatusModel instance;
 
-    public static String[] STEPS = {"欢迎使用","许可协议","安装选项","收集配置","安装进度","安装完成"};
+    //"安装选项",
+    public static String[] STEPS = {"欢迎使用","许可协议","数据配置","安装进度","安装完成"};
 
     private StatusModel(){
 

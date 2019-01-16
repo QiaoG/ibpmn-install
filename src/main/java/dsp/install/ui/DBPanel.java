@@ -1,8 +1,13 @@
 package dsp.install.ui;
 
+import dsp.install.domain.ConfigurationOfOracle;
+import dsp.install.event.DspEvent;
+import dsp.install.event.EventBus;
+import dsp.install.event.IEventListener;
+import lombok.Getter;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
-import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 
@@ -10,24 +15,29 @@ import static javax.swing.GroupLayout.Alignment.BASELINE;
 import static javax.swing.GroupLayout.Alignment.TRAILING;
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
-/*
+/**
 * Author GQ
 * Date:2019/1/7
 * Time:4:52 PM
 */
-public class DBPanel extends DspPanel {
+public class DBPanel extends DspPanel implements IEventListener {
     public DBPanel() {
         initUI();
+        EventBus.getInstance().registeListener(this);
     }
 
     private int FIELD_WIDTH = 20;
     private int FIELD_WIDTH2 = 6;
 
+    private ConfigurationOfOracle task = new ConfigurationOfOracle();
+
+    private JLabel orcleTX, mysqlTX;
+
     private void initUI() {
         String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
         System.out.println(lookAndFeel);
 
-        int fieldWidth = 10*1;
+        int fieldWidth = 10 * 1;
 
         GroupLayout gl = new GroupLayout(this);
         this.setLayout(gl);
@@ -36,13 +46,15 @@ public class DBPanel extends DspPanel {
         gl.setAutoCreateContainerGaps(true);
 
         ButtonGroup bg = new ButtonGroup();
-        JRadioButton oracle = new JRadioButton("oracle",true);
+        JRadioButton oracle = new JRadioButton("oracle", true);
         JRadioButton mysql = new JRadioButton("mysql");
         bg.add(oracle);
         bg.add(mysql);
+        oracle.setVisible(false);
+        mysql.setVisible(false);
 
         JPanel configPanel = new JPanel();
-        configPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
+        //configPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         CardLayout cardLayout = new CardLayout();
         configPanel.setLayout(cardLayout);
 
@@ -85,7 +97,7 @@ public class DBPanel extends DspPanel {
         JLabel ip = new JLabel("主机名(IP)：");
         JTextField ipField = new JTextField(FIELD_WIDTH);
         JLabel port = new JLabel("端口:");
-        JTextField portField = new JTextField("3306",FIELD_WIDTH2);
+        JTextField portField = new JTextField("3306", FIELD_WIDTH2);
         JLabel name = new JLabel("数据库名称：");
         JTextField nameField = new JTextField(FIELD_WIDTH);
         JLabel login = new JLabel("认证：");
@@ -104,14 +116,14 @@ public class DBPanel extends DspPanel {
                 .addGroup(gl.createParallelGroup()
                         .addComponent(typeField)
                         .addGroup(gl.createSequentialGroup()
-                                .addComponent(ipField,-1,-1,-2)
+                                .addComponent(ipField, -1, -1, -2)
                                 .addGap(20)
                                 .addComponent(port)
-                                .addComponent(portField,-1,-1,-2)
+                                .addComponent(portField, -1, -1, -2)
                         )
-                        .addComponent(nameField,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE)
-                        .addComponent(userField,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE)
-                        .addComponent(passwordFiled,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nameField, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(userField, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(passwordFiled, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -152,7 +164,7 @@ public class DBPanel extends DspPanel {
         JLabel ip = new JLabel("主机名(IP)：");
         JTextField ipField = new JTextField(FIELD_WIDTH);
         JLabel port = new JLabel("端口:");
-        JTextField portField = new JTextField("1521",FIELD_WIDTH2);
+        JTextField portField = new JTextField("1521", FIELD_WIDTH2);
         JLabel name = new JLabel("服务名：");
         JTextField nameField = new JTextField(FIELD_WIDTH);
         JLabel login = new JLabel("认证：");
@@ -160,25 +172,32 @@ public class DBPanel extends DspPanel {
         JTextField userField = new JTextField(FIELD_WIDTH);
         JLabel password = new JLabel("口令：");
         JTextField passwordFiled = new JTextField(FIELD_WIDTH);
+        orcleTX = new JLabel("连接成功");
+
         gl.setHorizontalGroup(gl.createSequentialGroup()
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(gl.createParallelGroup(TRAILING)
-                        .addComponent(type)
-                        .addComponent(ip)
-                        .addComponent(name)
-                        .addComponent(login)
-                        .addComponent(password))
                 .addGroup(gl.createParallelGroup()
-                        .addComponent(typeField)
                         .addGroup(gl.createSequentialGroup()
-                                .addComponent(ipField,-1,-1,-2)
-                                .addGap(20)
-                                .addComponent(port)
-                                .addComponent(portField,-1,-1,-2)
+                                .addGroup(gl.createParallelGroup(TRAILING)
+                                        .addComponent(type)
+                                        .addComponent(ip)
+                                        .addComponent(name)
+                                        .addComponent(login)
+                                        .addComponent(password))
+                                .addGroup(gl.createParallelGroup()
+                                        .addComponent(typeField)
+                                        .addGroup(gl.createSequentialGroup()
+                                                .addComponent(ipField, -1, -1, -2)
+                                                .addGap(20)
+                                                .addComponent(port)
+                                                .addComponent(portField, -1, -1, -2)
+                                        )
+                                        .addComponent(nameField, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(userField, -1, -1, -2)
+                                        .addComponent(passwordFiled, -1, -1, -2)
+                                )
                         )
-                        .addComponent(nameField,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE)
-                        .addComponent(userField,-1,-1,-2)
-                        .addComponent(passwordFiled,-1,-1,-2)
+                        .addComponent(orcleTX)
                 )
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -209,6 +228,9 @@ public class DBPanel extends DspPanel {
                         .addComponent(password)
                         .addComponent(passwordFiled)
                 )
+                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(orcleTX)
+                .addGap(30)
         );
         return panel;
     }
@@ -225,6 +247,33 @@ public class DBPanel extends DspPanel {
 
     @Override
     public void showMe() {
+        DspEvent dspEvent = new DspEvent(10, null);
+        orcleTX.setVisible(false);
+        EventBus.getInstance().fireListeners(dspEvent);
+    }
+
+    @Override
+    public void handleEvent(DspEvent dspEvent) {
+        String result = "";
+        if (dspEvent.getType() == DspEvent.DO_CONNECT_ORACLE) {
+            try {
+                result = task.testConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+                result = "连接失败！";
+            }
+            orcleTX.setVisible(true);
+            if (ConfigurationOfOracle.OK.equals(result)) {
+                orcleTX.setText("连接成功");
+                orcleTX.setForeground(Color.blue);
+
+                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.CONNECT_ORACLE_SUCCESS, null));
+            }else{
+                orcleTX.setForeground(Color.red);
+                orcleTX.setText("连接失败");
+                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.CONNECT_ORACLE_FAIL, null));
+            }
+        }
 
     }
 }

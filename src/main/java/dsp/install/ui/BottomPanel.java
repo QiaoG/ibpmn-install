@@ -1,7 +1,7 @@
 package dsp.install.ui;
 
 import dsp.install.domain.StatusModel;
-import dsp.install.event.Event;
+import dsp.install.event.DspEvent;
 import dsp.install.event.EventBus;
 import dsp.install.event.IEventListener;
 
@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 
 import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 
-/*
+/**
 * Author GQ
 * Date:2019/1/6
 * Time:5:13 PM
@@ -24,6 +24,8 @@ public class BottomPanel extends JPanel implements IEventListener{
     }
 
     private JButton preButton,nextButton;
+
+    private int status;
 
     private void initUI() {
 //        this.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
@@ -56,20 +58,40 @@ public class BottomPanel extends JPanel implements IEventListener{
         });
 
         nextButton.addActionListener((ActionEvent event) -> {
-            StatusModel.getInstance().next();
+            if(status == 0) {
+                StatusModel.getInstance().next();
+            }else{
+                nextButton.setEnabled(false);
+                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.DO_CONNECT_ORACLE,null));
+            }
         });
 
         closeButton.addActionListener((ActionEvent event) -> {
-            int option = JOptionPane.showConfirmDialog(null, "确定退出系统? ", "提示 ", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-            if (option == JOptionPane.OK_OPTION) {
+            if(PerformanceModel.getInstance().getProfile() == 0){
                 System.exit(0);
+            }else {
+                int option = JOptionPane.showConfirmDialog(null, "确定退出系统? ", "提示 ", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (option == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
             }
         });
     }
 
     @Override
-    public void handleEvent(Event event) {
-        if(event.getType() != 0) return;
-        nextButton.setEnabled((Boolean) event.getValue());
+    public void handleEvent(DspEvent dspEvent) {
+        if(dspEvent.getType() == 0) {
+            nextButton.setEnabled((Boolean) dspEvent.getValue());
+        }
+        if(dspEvent.getType() == DspEvent.SHOW_ORACLE_CONFIG || dspEvent.getType() == DspEvent.CONNECT_ORACLE_FAIL){
+            nextButton.setText("测试连接");
+            nextButton.setEnabled(true);
+            this.status = 1;
+        }
+        if(dspEvent.getType() == DspEvent.CONNECT_ORACLE_SUCCESS){
+            nextButton.setText("下一页");
+            nextButton.setEnabled(true);
+            this.status = 0;
+        }
     }
 }

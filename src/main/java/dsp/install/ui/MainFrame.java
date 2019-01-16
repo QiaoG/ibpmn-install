@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/*
+/**
 * Author GQ
 * Date:2018/12/31
 * Time:11:27 AM
@@ -37,15 +37,18 @@ public class MainFrame extends JFrame {
         }
         //UIManager.setLookAndFeel(lookAndFeel);
         initUI();
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                int option = JOptionPane.showConfirmDialog(null, "确定退出系统? ", "提示 ", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-                if (option == JOptionPane.OK_OPTION) {
+                if(PerformanceModel.getInstance().getProfile() == 0) {
                     System.exit(0);
-                } else {
-                    //super.windowClosing(e);
-                    System.out.println("no close");
+
+                }else{
+                    int option = JOptionPane.showConfirmDialog(null, "确定退出系统? ", "提示 ", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                    if (option == JOptionPane.OK_OPTION) {
+                        System.exit(0);
+                    }
                 }
             }
         });
