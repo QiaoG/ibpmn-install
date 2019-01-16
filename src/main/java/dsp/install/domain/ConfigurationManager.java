@@ -2,6 +2,10 @@ package dsp.install.domain;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
 * Author:GQ 
@@ -9,7 +13,6 @@ import lombok.Getter;
 * Date:2019/1/16
 * Time:8:13
 */
-@Data
 public class ConfigurationManager {
 
     @Getter
@@ -27,5 +30,20 @@ public class ConfigurationManager {
             instance = new ConfigurationManager();
         }
         return instance;
+    }
+
+    @Getter
+    @Setter
+    private String distDir;
+
+    private List<InstallTask> tasks = new ArrayList<>();
+
+    public void initTasks(){
+        TomcatCopeTask tcTask = new TomcatCopeTask(distDir);
+        tasks.add(tcTask);
+    }
+
+    public void exexuteAllTask(){
+
     }
 }

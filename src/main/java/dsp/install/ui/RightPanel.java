@@ -28,14 +28,14 @@ public class RightPanel extends JPanel implements IStatusChangeListener{
         cardLayout = new CardLayout();
 
         this.setLayout(cardLayout);
-
-        this.add(new WelcomPanel());
+        WelcomPanel wp = new WelcomPanel();
+        this.add(wp);
         this.add(new LicencePanel());
         //this.add(new FunctionPanel());
         this.add(new DBPanel());
         this.add(new ProcessPanel());
         this.add(new CompletePanel());
-
+        wp.showMe();
     }
 
     @Override

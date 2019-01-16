@@ -1,5 +1,6 @@
 package dsp.install.ui;
 
+import dsp.install.domain.ConfigurationManager;
 import dsp.install.domain.ConfigurationOfOracle;
 import dsp.install.event.DspEvent;
 import dsp.install.event.EventBus;
@@ -29,15 +30,11 @@ public class DBPanel extends DspPanel implements IEventListener {
     private int FIELD_WIDTH = 20;
     private int FIELD_WIDTH2 = 6;
 
-    private ConfigurationOfOracle task = new ConfigurationOfOracle();
+    private ConfigurationOfOracle task = ConfigurationManager.getInstance().getOracleConfig();
 
     private JLabel orcleTX, mysqlTX;
 
     private void initUI() {
-        String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-        System.out.println(lookAndFeel);
-
-        int fieldWidth = 10 * 1;
 
         GroupLayout gl = new GroupLayout(this);
         this.setLayout(gl);
@@ -54,7 +51,6 @@ public class DBPanel extends DspPanel implements IEventListener {
         mysql.setVisible(false);
 
         JPanel configPanel = new JPanel();
-        //configPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         CardLayout cardLayout = new CardLayout();
         configPanel.setLayout(cardLayout);
 
@@ -82,6 +78,7 @@ public class DBPanel extends DspPanel implements IEventListener {
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
+                .addGap(20)
                 .addGroup(gl.createParallelGroup()
                         .addComponent(oracle)
                         .addComponent(mysql))
@@ -162,16 +159,16 @@ public class DBPanel extends DspPanel implements IEventListener {
         JLabel type = new JLabel("类型：");
         JLabel typeField = new JLabel("ORACLE");
         JLabel ip = new JLabel("主机名(IP)：");
-        JTextField ipField = new JTextField(FIELD_WIDTH);
+        JTextField ipField = new JTextField(task.getUrl(),FIELD_WIDTH);
         JLabel port = new JLabel("端口:");
-        JTextField portField = new JTextField("1521", FIELD_WIDTH2);
+        JTextField portField = new JTextField(task.getPort(), FIELD_WIDTH2);
         JLabel name = new JLabel("服务名：");
-        JTextField nameField = new JTextField(FIELD_WIDTH);
+        JTextField nameField = new JTextField(task.getName(),FIELD_WIDTH);
         JLabel login = new JLabel("认证：");
         //JLabel user = new JLabel("账号:");
-        JTextField userField = new JTextField(FIELD_WIDTH);
+        JTextField userField = new JTextField(task.getUrl(),FIELD_WIDTH);
         JLabel password = new JLabel("口令：");
-        JTextField passwordFiled = new JTextField(FIELD_WIDTH);
+        JTextField passwordFiled = new JPasswordField(task.getPassword(),FIELD_WIDTH);
         orcleTX = new JLabel("连接成功");
 
         gl.setHorizontalGroup(gl.createSequentialGroup()
