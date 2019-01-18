@@ -12,13 +12,23 @@ public class ResourceUnzipTask extends InstallTask {
 
     private final String SECRE_KEY = "6u5fBBcJOVyZnd9CjbGBslUypGZFBp";
 
+    private String srcFile ;
+
+    public ResourceUnzipTask(String dspFile,String distDir){
+        super(distDir);
+        this.srcFile = dspFile;
+        this.setName("部署资源");
+    }
+
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         ZipCipherUtil util = new ZipCipherUtil();
-        try {
-            util.decryptUnzip("install.dsp", "F:\\work\\HiBPM\\dsp-resource\\temp\\ROOT", SECRE_KEY);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        util.decryptUnzip(srcFile, this.getDistDir(), SECRE_KEY);
+    }
+
+    @Override
+    public String getName(){
+        return super.getName()+","+this.srcFile;
     }
 }

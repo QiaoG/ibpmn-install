@@ -1,5 +1,6 @@
 package dsp.install.ui;
 
+import dsp.install.domain.ConfigurationManager;
 import dsp.install.event.DspEvent;
 import dsp.install.event.EventBus;
 
@@ -39,12 +40,12 @@ public class LicencePanel extends DspPanel {
         area.setWrapStyleWord(true);
 
         bg = new ButtonGroup();
-        JRadioButton accept = new JRadioButton("我接受该许可协议的条款",PerformanceModel.getInstance().getProfile()==0?true:false);
+        JRadioButton accept = new JRadioButton("我接受该许可协议的条款", ConfigurationManager.getInstance().getProfile()==0?true:false);
         accept.setActionCommand("ok");
         accept.addChangeListener((ChangeEvent event) -> {
             LicencePanel.this.changeLicence();
         });
-        JRadioButton notaccept = new JRadioButton("我不接受该许可协议的条款",PerformanceModel.getInstance().getProfile()==0?false:true);
+        JRadioButton notaccept = new JRadioButton("我不接受该许可协议的条款",ConfigurationManager.getInstance().getProfile()==0?false:true);
         notaccept.setActionCommand("not");
         notaccept.addChangeListener((ChangeEvent event) -> {
             LicencePanel.this.changeLicence();

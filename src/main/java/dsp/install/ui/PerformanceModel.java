@@ -17,9 +17,6 @@ public class PerformanceModel {
     public final int LEFT_WIDE = 100;
     public final int BOTTOM_HIGHT = 40;
 
-    @Getter
-    private int profile = 0;
-
     private PerformanceModel(){
 
     }

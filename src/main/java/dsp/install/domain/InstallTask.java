@@ -1,6 +1,8 @@
 package dsp.install.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Author:GQ
@@ -8,12 +10,20 @@ import lombok.Data;
  * Date:2019/1/16
  * Time:22:45
  */
-@Data
 public abstract class InstallTask {
 
+    @Getter
+    @Setter
+    private String name;
+
+    @Getter
     private String distDir;
 
-    public void execute() {
+    public InstallTask(String distDir){
+        this.distDir = distDir;
+    }
+
+    public void execute() throws Exception {
 
     }
 }

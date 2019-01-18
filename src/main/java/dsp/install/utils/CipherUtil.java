@@ -18,14 +18,6 @@ public class CipherUtil {
 
     private static String type = "AES";
 
-    /**
-     * 把文件srcFile加密后存储为destFile
-     * @param srcFile     加密前的文件
-     * @param destFile    加密后的文件
-     * @param privateKey  密钥
-     * @throws GeneralSecurityException
-     * @throws IOException
-     */
     public void encrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
         Key key = getKey(privateKey);
         Cipher cipher = Cipher.getInstance(type + "/ECB/PKCS5Padding");
@@ -51,14 +43,7 @@ public class CipherUtil {
         }
     }
 
-    /**
-     * 把文件srcFile解密后存储为destFile
-     * @param srcFile     解密前的文件
-     * @param destFile    解密后的文件
-     * @param privateKey  密钥
-     * @throws GeneralSecurityException
-     * @throws IOException
-     */
+
     public void decrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
         Key key = getKey(privateKey);
         Cipher cipher = Cipher.getInstance(type + "/ECB/PKCS5Padding");
@@ -85,12 +70,6 @@ public class CipherUtil {
         }
     }
 
-    /**
-     * 根据filePath创建相应的目录
-     * @param filePath      要创建的文件路经
-     * @return  file        文件
-     * @throws IOException
-     */
     private File mkdirFiles(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.getParentFile().exists()) {
@@ -101,12 +80,6 @@ public class CipherUtil {
         return file;
     }
 
-    /**
-     * 生成指定字符串的密钥
-     * @param secret        要生成密钥的字符串
-     * @return secretKey    生成后的密钥
-     * @throws GeneralSecurityException
-     */
     private static Key getKey(String secret) throws GeneralSecurityException {
         KeyGenerator kgen = KeyGenerator.getInstance(type);
         kgen.init(128, new SecureRandom(secret.getBytes()));
@@ -114,14 +87,6 @@ public class CipherUtil {
         return secretKey;
     }
 
-    /**
-     * 加密解密流
-     * @param in        加密解密前的流
-     * @param out       加密解密后的流
-     * @param cipher    加密解密
-     * @throws IOException
-     * @throws GeneralSecurityException
-     */
     private static void crypt(InputStream in, OutputStream out, Cipher cipher) throws IOException, GeneralSecurityException {
         int blockSize = cipher.getBlockSize() * 1000;
         int outputSize = cipher.getOutputSize(blockSize);

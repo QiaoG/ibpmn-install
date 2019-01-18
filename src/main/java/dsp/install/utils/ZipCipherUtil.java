@@ -9,6 +9,8 @@ import java.util.UUID;
  * Author Mail:gq_200508@126.com
  * Date:2019/1/16
  * Time:11:00
+ *
+ * -Xss2M
  */
 public class ZipCipherUtil {
 
@@ -19,9 +21,7 @@ public class ZipCipherUtil {
     public void encryptZip(String srcFile, String destfile, String keyStr) throws Exception {
         File temp = new File(UUID.randomUUID().toString() + ".zip");
         temp.deleteOnExit();
-        // 先压缩文件
         zipUtil.zip(srcFile, temp.getAbsolutePath());
-        // 对文件加密
         cipherUtil.encrypt(temp.getAbsolutePath(), destfile, keyStr);
         temp.delete();
     }
@@ -29,9 +29,9 @@ public class ZipCipherUtil {
     public void decryptUnzip(String srcfile, String destfile, String keyStr) throws Exception {
         File temp = new File(UUID.randomUUID().toString() + ".zip");
         temp.deleteOnExit();
-        // 先对文件解密
+
         cipherUtil.decrypt(srcfile, temp.getAbsolutePath(), keyStr);
-        // 解压缩
+
         zipUtil.unZip(temp.getAbsolutePath(),destfile);
         temp.delete();
     }
@@ -39,10 +39,53 @@ public class ZipCipherUtil {
     public static void main(String[] args) throws Exception {
         long l1 = System.currentTimeMillis();
 
-        //加密
-      new ZipCipherUtil().encryptZip("F:\\work\\HiBPM\\dsp-resource\\ROOT", "F:\\work\\HiBPM\\dsp-resource\\install.dsp", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+
+        ZipCipherUtil util = new ZipCipherUtil();
+
+//        util.encryptZip("F:\\work\\HiBPM\\dsp-resource\\ROOT1", "F:\\work\\HiBPM\\dsp-resource\\install1.dsp", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+//        long l2 = System.currentTimeMillis();
+//        System.out.println("1 complete "+((l2 - l1) / 1000));
+//        l1 = System.currentTimeMillis();
+//        util.encryptZip("F:\\work\\HiBPM\\dsp-resource\\ROOT2", "F:\\work\\HiBPM\\dsp-resource\\install2.dsp", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+//        l2 = System.currentTimeMillis();
+//        System.out.println("2 complete "+((l2 - l1) / 1000));
+//        l1 = System.currentTimeMillis();
+//        util.encryptZip("F:\\work\\HiBPM\\dsp-resource\\ROOT3", "F:\\work\\HiBPM\\dsp-resource\\install3.dsp", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+//        l2 = System.currentTimeMillis();
+//        System.out.println("3 complete "+((l2 - l1) / 1000));
+//        l1 = System.currentTimeMillis();
+//        util.encryptZip("F:\\work\\HiBPM\\dsp-resource\\ROOT4", "F:\\work\\HiBPM\\dsp-resource\\install4.dsp", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+//        l2 = System.currentTimeMillis();
+//        System.out.println("4 complete "+((l2 - l1) / 1000));
+//        l1 = System.currentTimeMillis();
+//        util.encryptZip("F:\\work\\HiBPM\\dsp-resource\\ROOT5", "F:\\work\\HiBPM\\dsp-resource\\install5.dsp", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+//        l2 = System.currentTimeMillis();
+//        System.out.println("5 complete "+((l2 - l1) / 1000));
         //解密
-//        new ZipCipherUtil().decryptUnzip("F:\\work\\HiBPM\\dsp-resource\\install.dsp", "F:\\work\\HiBPM\\dsp-resource\\temp\\ROOT", "12345");
+        util.decryptUnzip("F:\\work\\HiBPM\\dsp-resource\\install1.dsp", "F:\\work\\HiBPM\\dsp-resource\\temp\\ROOT", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+        long l2 = System.currentTimeMillis();
+        System.out.println("1 complete "+((l2 - l1) / 1000));
+        l1 = System.currentTimeMillis();
+
+        util.decryptUnzip("F:\\work\\HiBPM\\dsp-resource\\install2.dsp", "F:\\work\\HiBPM\\dsp-resource\\temp\\ROOT", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+        l2 = System.currentTimeMillis();
+        System.out.println("2 complete "+((l2 - l1) / 1000));
+        l1 = System.currentTimeMillis();
+
+        util.decryptUnzip("F:\\work\\HiBPM\\dsp-resource\\install3.dsp", "F:\\work\\HiBPM\\dsp-resource\\temp\\ROOT", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+        l2 = System.currentTimeMillis();
+        System.out.println("3 complete "+((l2 - l1) / 1000));
+        l1 = System.currentTimeMillis();
+
+        util.decryptUnzip("F:\\work\\HiBPM\\dsp-resource\\install4.dsp", "F:\\work\\HiBPM\\dsp-resource\\temp\\ROOT", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+        l2 = System.currentTimeMillis();
+        System.out.println("4 complete "+((l2 - l1) / 1000));
+        l1 = System.currentTimeMillis();
+
+        util.decryptUnzip("F:\\work\\HiBPM\\dsp-resource\\install5.dsp", "F:\\work\\HiBPM\\dsp-resource\\temp\\ROOT", "6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+        l2 = System.currentTimeMillis();
+        System.out.println("5 complete "+((l2 - l1) / 1000));
+        l1 = System.currentTimeMillis();
 
 //        long l2 = System.currentTimeMillis();
 //        System.out.println((l2 - l1) + "毫秒.");

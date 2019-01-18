@@ -1,5 +1,7 @@
 package dsp.install.ui;
 
+import dsp.install.domain.ConfigurationManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -41,7 +43,7 @@ public class MainFrame extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if(PerformanceModel.getInstance().getProfile() == 0) {
+                if(ConfigurationManager.getInstance().getProfile() == 0) {
                     System.exit(0);
 
                 }else{

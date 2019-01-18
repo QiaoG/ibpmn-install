@@ -1,24 +1,21 @@
 package dsp.install.domain;
 
-import lombok.Data;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.text.MessageFormat;
 
 /**
-* Author:GQ 
-* Author Mail:gq_200508@126.com
-* Date:2019/1/14
-* Time:16:52
-*/
-@Data
-public class ConfigurationOfOracle extends ConfigurationOfJDBC{
+ * Author:GQ
+ * Author Mail:gq_200508@126.com
+ * Date:2019/1/18
+ * Time:21:14
+ */
+public class ConfigurationOfMysql extends ConfigurationOfJDBC{
 
     @Override
     public String testConnection() throws Exception {
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        String u = MessageFormat.format("jdbc:oracle:thin:{0}:{1}:{2}", getUrl(), getPort(), getName());
+        Class.forName("com.mysql.jdbc.Driver");
+        String u = MessageFormat.format("jdbc:mysql://{0}:{1}/{2}?useUnicode=true&amp;characterEncoding=UTF-8", getUrl(), getPort(), getName());
         Connection conn = DriverManager.getConnection(u,getUser(), getPassword());
         if (conn == null) {
             return "fail";
@@ -26,10 +23,9 @@ public class ConfigurationOfOracle extends ConfigurationOfJDBC{
             try {
                 conn.close();
             } catch (Exception e) {
-                System.out.println("close db connection (ORACLE) fail!");
+                System.out.println("close (MYSQL) connection fail!");
             }
             return OK;
         }
     }
-
 }

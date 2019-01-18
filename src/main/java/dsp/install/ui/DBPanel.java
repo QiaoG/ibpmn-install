@@ -1,11 +1,11 @@
 package dsp.install.ui;
 
 import dsp.install.domain.ConfigurationManager;
+import dsp.install.domain.ConfigurationOfJDBC;
 import dsp.install.domain.ConfigurationOfOracle;
 import dsp.install.event.DspEvent;
 import dsp.install.event.EventBus;
 import dsp.install.event.IEventListener;
-import lombok.Getter;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -23,16 +23,21 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 */
 public class DBPanel extends DspPanel implements IEventListener {
     public DBPanel() {
+        configs[0] = ConfigurationManager.getInstance().getJDBCConfiguraion(true);
+        configs[1] = ConfigurationManager.getInstance().getJDBCConfiguraion(false);
         initUI();
         EventBus.getInstance().registeListener(this);
+
     }
 
     private int FIELD_WIDTH = 20;
     private int FIELD_WIDTH2 = 6;
 
-    private ConfigurationOfOracle task = ConfigurationManager.getInstance().getOracleConfig();
+    private ConfigurationOfJDBC[] configs = new ConfigurationOfJDBC[2];
 
     private JLabel orcleTX, mysqlTX;
+
+    private int dbIndex = 0;
 
     private void initUI() {
 
@@ -47,10 +52,9 @@ public class DBPanel extends DspPanel implements IEventListener {
         JRadioButton mysql = new JRadioButton("mysql");
         bg.add(oracle);
         bg.add(mysql);
-        oracle.setVisible(false);
-        mysql.setVisible(false);
 
         JPanel configPanel = new JPanel();
+        configPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED));
         CardLayout cardLayout = new CardLayout();
         configPanel.setLayout(cardLayout);
 
@@ -60,11 +64,13 @@ public class DBPanel extends DspPanel implements IEventListener {
         mysql.addItemListener((ItemEvent event) -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 cardLayout.last(configPanel);
+                dbIndex = 1;
             }
         });
         oracle.addItemListener((ItemEvent event) -> {
             if (event.getStateChange() == ItemEvent.SELECTED) {
                 cardLayout.first(configPanel);
+                dbIndex = 0;
             }
         });
 
@@ -92,35 +98,43 @@ public class DBPanel extends DspPanel implements IEventListener {
         JLabel type = new JLabel("类型：");
         JLabel typeField = new JLabel("MYSQL");
         JLabel ip = new JLabel("主机名(IP)：");
-        JTextField ipField = new JTextField(FIELD_WIDTH);
+        JTextField ipField = new JTextField(configs[1].getUrl(),FIELD_WIDTH);
         JLabel port = new JLabel("端口:");
-        JTextField portField = new JTextField("3306", FIELD_WIDTH2);
+        JTextField portField = new JTextField(configs[1].getPort(), FIELD_WIDTH2);
         JLabel name = new JLabel("数据库名称：");
-        JTextField nameField = new JTextField(FIELD_WIDTH);
+        JTextField nameField = new JTextField(configs[1].getName(),FIELD_WIDTH);
         JLabel login = new JLabel("认证：");
         JLabel user = new JLabel("用户名：");
-        JTextField userField = new JTextField(FIELD_WIDTH);
+        JTextField userField = new JTextField(configs[1].getUrl(),FIELD_WIDTH);
         JLabel password = new JLabel("密码：");
-        JTextField passwordFiled = new JTextField(FIELD_WIDTH);
+        JTextField passwordFiled = new JTextField(configs[1].getPassword(),FIELD_WIDTH);
+        mysqlTX = new JLabel("连接成功");
+
         gl.setHorizontalGroup(gl.createSequentialGroup()
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(gl.createParallelGroup(TRAILING)
-                        .addComponent(type)
-                        .addComponent(ip)
-                        .addComponent(name)
-                        .addComponent(user)
-                        .addComponent(password))
                 .addGroup(gl.createParallelGroup()
-                        .addComponent(typeField)
                         .addGroup(gl.createSequentialGroup()
-                                .addComponent(ipField, -1, -1, -2)
-                                .addGap(20)
-                                .addComponent(port)
-                                .addComponent(portField, -1, -1, -2)
+                                .addGroup(gl.createParallelGroup(TRAILING)
+                                        .addComponent(type)
+                                        .addComponent(ip)
+                                        .addComponent(name)
+                                        .addComponent(user)
+                                        .addComponent(password))
+                                .addGroup(gl.createParallelGroup()
+                                        .addComponent(typeField)
+                                        .addGroup(gl.createSequentialGroup()
+                                                .addComponent(ipField, -1, -1, -2)
+                                                .addGap(20)
+                                                .addComponent(port)
+                                                .addComponent(portField, -1, -1, -2)
+                                        )
+                                        .addComponent(nameField, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(userField, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(passwordFiled, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                )
                         )
-                        .addComponent(nameField, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(userField, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(passwordFiled, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mysqlTX)
+                )
                 .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -148,7 +162,11 @@ public class DBPanel extends DspPanel implements IEventListener {
                         .addComponent(userField))
                 .addGroup(gl.createParallelGroup(BASELINE)
                         .addComponent(password)
-                        .addComponent(passwordFiled))
+                        .addComponent(passwordFiled)
+                )
+                .addPreferredGap(RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mysqlTX)
+                .addGap(30)
         );
         return panel;
     }
@@ -159,16 +177,16 @@ public class DBPanel extends DspPanel implements IEventListener {
         JLabel type = new JLabel("类型：");
         JLabel typeField = new JLabel("ORACLE");
         JLabel ip = new JLabel("主机名(IP)：");
-        JTextField ipField = new JTextField(task.getUrl(),FIELD_WIDTH);
+        JTextField ipField = new JTextField(configs[0].getUrl(),FIELD_WIDTH);
         JLabel port = new JLabel("端口:");
-        JTextField portField = new JTextField(task.getPort(), FIELD_WIDTH2);
+        JTextField portField = new JTextField(configs[0].getPort(), FIELD_WIDTH2);
         JLabel name = new JLabel("服务名：");
-        JTextField nameField = new JTextField(task.getName(),FIELD_WIDTH);
+        JTextField nameField = new JTextField(configs[0].getName(),FIELD_WIDTH);
         JLabel login = new JLabel("认证：");
         //JLabel user = new JLabel("账号:");
-        JTextField userField = new JTextField(task.getUrl(),FIELD_WIDTH);
+        JTextField userField = new JTextField(configs[0].getUrl(),FIELD_WIDTH);
         JLabel password = new JLabel("口令：");
-        JTextField passwordFiled = new JPasswordField(task.getPassword(),FIELD_WIDTH);
+        JTextField passwordFiled = new JPasswordField(configs[0].getPassword(),FIELD_WIDTH);
         orcleTX = new JLabel("连接成功");
 
         gl.setHorizontalGroup(gl.createSequentialGroup()
@@ -246,29 +264,32 @@ public class DBPanel extends DspPanel implements IEventListener {
     public void showMe() {
         DspEvent dspEvent = new DspEvent(10, null);
         orcleTX.setVisible(false);
+        mysqlTX.setVisible(false);
         EventBus.getInstance().fireListeners(dspEvent);
     }
 
     @Override
     public void handleEvent(DspEvent dspEvent) {
+        String[] db = {"ORACLE","MYSQL"};
+        JLabel label = dbIndex == 0 ? orcleTX : mysqlTX;
         String result = "";
-        if (dspEvent.getType() == DspEvent.DO_CONNECT_ORACLE) {
+        if (dspEvent.getType() == DspEvent.DO_CONNECT_DB) {
             try {
-                result = task.testConnection();
+                result = configs[dbIndex].testConnection();
             } catch (Exception e) {
                 e.printStackTrace();
-                result = "连接失败！";
+                result = db[dbIndex]+"连接失败！";
             }
             orcleTX.setVisible(true);
             if (ConfigurationOfOracle.OK.equals(result)) {
-                orcleTX.setText("连接成功");
-                orcleTX.setForeground(Color.blue);
+                label.setText(db[dbIndex]+"连接成功");
+                label.setForeground(Color.blue);
 
-                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.CONNECT_ORACLE_SUCCESS, null));
+                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.CONNECT_DB_SUCCESS, null));
             }else{
-                orcleTX.setForeground(Color.red);
-                orcleTX.setText("连接失败");
-                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.CONNECT_ORACLE_FAIL, null));
+                label.setForeground(Color.red);
+                label.setText(db[dbIndex]+"连接失败");
+                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.CONNECT_DB_FAIL, null));
             }
         }
 
