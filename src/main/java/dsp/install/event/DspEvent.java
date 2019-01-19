@@ -22,6 +22,16 @@ public class DspEvent {
 
     public final static int CONNECT_DB_FAIL = 13;
 
+    public final static int TASKS_RUN = 100;
+
+    public final static int ONE_TASK_BEGIN_RUN = 110;
+
+    public final static int ONE_TASK_END_RUN = 111;
+
+    public final static int TASKS_RUN_EXCEPTION = 199;
+
+    public final static int TASKS_RUN_COMPLETE = 190;
+
     private int type;
 
     private Object value;

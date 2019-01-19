@@ -32,4 +32,10 @@ public class ConfigurationOfOracle extends ConfigurationOfJDBC{
         }
     }
 
+    @Override
+    public String getJdbcUrl() {
+        String url = MessageFormat.format("jdbc:oracle:thin:{0}:{1}:{2}", getUrl(), getPort(), getName());
+        return url;
+    }
+
 }

@@ -23,7 +23,5 @@ public abstract class InstallTask {
         this.distDir = distDir;
     }
 
-    public void execute() throws Exception {
-
-    }
+    public abstract void execute() throws Exception ;
 }

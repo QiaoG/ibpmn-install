@@ -23,4 +23,6 @@ public abstract class ConfigurationOfJDBC {
     private String password = "";
 
     public abstract String testConnection() throws Exception;
+
+    public abstract String getJdbcUrl();
 }

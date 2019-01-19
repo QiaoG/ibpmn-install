@@ -28,4 +28,10 @@ public class ConfigurationOfMysql extends ConfigurationOfJDBC{
             return OK;
         }
     }
+
+    @Override
+    public String getJdbcUrl() {
+        String url = MessageFormat.format("jdbc:mysql://{0}:{1}/{2}?useUnicode=true&amp;characterEncoding=UTF-8", getUrl(), getPort(), getName());
+        return url;
+    }
 }
