@@ -60,6 +60,7 @@ public class WelcomPanel extends DspPanel {
         FileSystemView fsv = FileSystemView.getFileSystemView();
         dir.setText(fsv.getDefaultDirectory().toString());
         ConfigurationManager.getInstance().setDistDir(fsv.getDefaultDirectory().toString());
+        ConfigurationManager.getInstance().setDesktopDir(fsv.getHomeDirectory());
     }
 
     private class OpenDirAction extends AbstractAction {
@@ -71,7 +72,6 @@ public class WelcomPanel extends DspPanel {
             String path = null;
             JFileChooser fileChooser = new JFileChooser();
             FileSystemView fsv = FileSystemView.getFileSystemView();
-            //System.out.println(fsv.getHomeDirectory());
             fileChooser.setCurrentDirectory(fsv.getDefaultDirectory());
             fileChooser.setDialogTitle("请选择安装目录...");
             fileChooser.setApproveButtonText("确定");

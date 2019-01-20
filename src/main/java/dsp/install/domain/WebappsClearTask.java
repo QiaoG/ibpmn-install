@@ -12,6 +12,7 @@ public class WebappsClearTask extends InstallTask {
 
     public WebappsClearTask(String distDir){
         super(distDir);
+        setName("清理部署环境");
     }
 
     @Override

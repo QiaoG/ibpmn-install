@@ -29,6 +29,6 @@ public class ResourceUnzipTask extends InstallTask {
 
     @Override
     public String getName(){
-        return super.getName()+","+this.srcFile;
+        return super.getName()+"("+this.srcFile+")";
     }
 }

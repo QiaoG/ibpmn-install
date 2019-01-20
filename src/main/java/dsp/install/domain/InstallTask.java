@@ -19,6 +19,10 @@ public abstract class InstallTask {
     @Getter
     private String distDir;
 
+    @Getter
+    @Setter
+    private int progressValue;
+
     public InstallTask(String distDir){
         this.distDir = distDir;
     }

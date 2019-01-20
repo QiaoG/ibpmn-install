@@ -21,6 +21,10 @@ public class ResourceVerificationTask extends InstallTask {
 
     @Override
     public void execute() throws Exception{
+        File tomcat = new File(this.getDistDir());
+        if(tomcat.exists() && tomcat.isDirectory() && ConfigurationManager.getInstance().getProfile() != 0){
+            throw new DspException("WEB服务器已经存在!");
+        }
         File resource = null;
         for (String file : RESOURCE_FILES) {
             resource = new File(file);

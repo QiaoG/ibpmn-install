@@ -7,6 +7,7 @@ import dsp.install.exception.DspException;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,9 @@ public class ConfigurationManager {
 
     private final int RESOURCE_SEPARATE_NUM = 5;
 
+    @Setter
+    private File desktopDir;
+
     @Getter
     private static ConfigurationManager instance;
 
@@ -37,6 +41,10 @@ public class ConfigurationManager {
 
     @Getter
     private boolean oracle;
+
+    @Setter
+    @Getter
+    private boolean taskStop;
 
     public ConfigurationOfJDBC createJDBCConfiguraion(boolean oracle){
         ConfigurationOfJDBC config = oracle ? new ConfigurationOfOracle() : new ConfigurationOfMysql();
@@ -70,41 +78,61 @@ public class ConfigurationManager {
     }
 
     public void initTasks(){
-        InstallTask task = new ResourceVerificationTask(null);
+        taskStop = false;
+        InstallTask task = new ResourceVerificationTask(distDir+"\\"+TOMCAT_DIR_NAME);
+        task.setProgressValue(5);
         tasks.add(task);
 
         task = new TomcatCopyTask(distDir);
-        //tasks.add(task);
+        task.setProgressValue(15);
+        tasks.add(task);
 
         String rootPath = distDir+"\\"+TOMCAT_DIR_NAME+"\\webapps\\ROOT";
         task = new WebappsClearTask(rootPath);
-        //tasks.add(task);
+        task.setProgressValue(10);
+        tasks.add(task);
 
         for(int i = 1; i <= RESOURCE_SEPARATE_NUM; i++){
             task = new ResourceUnzipTask("install"+i+".dsp",rootPath);
-            //tasks.add(task);
+            task.setProgressValue(12);
+            tasks.add(task);
         }
 
         task = new JdbcConfigTask(rootPath+"\\WEB-INF\\classes",oracle);
+        task.setProgressValue(5);
+        tasks.add(task);
+
+        task = new ShortcutCreatedTask(distDir+"\\"+TOMCAT_DIR_NAME+"\\bin");
+        task.setProgressValue(5);
         tasks.add(task);
     }
 
     public void exexuteAllTask(){
+        int flag = 0;
         for (int i = 0; i < tasks.size(); i++) {
+            if(taskStop){
+                flag = 1;
+                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.TASKS_RUN_EXCEPTION, "安装终止!"));
+                break;
+            }
             try {
                 EventBus.getInstance().fireListeners(new DspEvent(DspEvent.ONE_TASK_BEGIN_RUN,tasks.get(i).getName()));
                 tasks.get(i).execute();
-                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.ONE_TASK_END_RUN,tasks.get(i).getName()));
+                EventBus.getInstance().fireListeners(new DspEvent(DspEvent.ONE_TASK_END_RUN,tasks.get(i)));
                 System.out.println(tasks.get(i).getName()+"完成");
             } catch (Exception e) {
+                flag = 2;
                 e.printStackTrace();
                 if(e instanceof DspException){
                     EventBus.getInstance().fireListeners(new DspEvent(DspEvent.TASKS_RUN_EXCEPTION,((DspException)e).getDescription()));
                 }else{
-                    EventBus.getInstance().fireListeners(new DspEvent(DspEvent.TASKS_RUN_EXCEPTION,null));
+                    EventBus.getInstance().fireListeners(new DspEvent(DspEvent.TASKS_RUN_EXCEPTION,"程序异常："+e.getMessage()));
                 }
                 break;
             }
+        }
+        if(flag == 0) {
+            EventBus.getInstance().fireListeners(new DspEvent(DspEvent.TASKS_RUN_COMPLETE, ""));
         }
     }
 

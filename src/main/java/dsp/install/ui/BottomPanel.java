@@ -5,6 +5,7 @@ import dsp.install.domain.StatusModel;
 import dsp.install.event.DspEvent;
 import dsp.install.event.EventBus;
 import dsp.install.event.IEventListener;
+import dsp.install.exception.DspException;
 
 import javax.swing.*;
 
@@ -81,7 +82,7 @@ public class BottomPanel extends JPanel implements IEventListener{
 
     @Override
     public void handleEvent(DspEvent dspEvent) {
-        if(dspEvent.getType() == 0) {
+        if(dspEvent.getType() == DspEvent.LICENCE) {
             nextButton.setEnabled((Boolean) dspEvent.getValue());
         }
         if(dspEvent.getType() == DspEvent.SHOW_DB_CONFIG || dspEvent.getType() == DspEvent.CONNECT_DB_FAIL){
@@ -93,6 +94,13 @@ public class BottomPanel extends JPanel implements IEventListener{
             nextButton.setText("下一页");
             nextButton.setEnabled(true);
             this.status = 0;
+        }
+        if(dspEvent.getType() == DspEvent.TASKS_RUN){
+            this.preButton.setEnabled(false);
+            this.nextButton.setEnabled(false);
+        }
+        if (dspEvent.getType() == DspEvent.TASKS_RUN_COMPLETE) {
+            this.nextButton.setEnabled(true);
         }
     }
 }
