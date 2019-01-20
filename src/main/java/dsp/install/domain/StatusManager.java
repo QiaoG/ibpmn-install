@@ -14,20 +14,20 @@ import java.util.List;
 * Time:11:43 AM
 */
 @Data
-public class StatusModel {
+public class StatusManager {
     @Getter
-    private static StatusModel instance;
+    private static StatusManager instance;
 
     //"安装选项",
     public static String[] STEPS = {"欢迎使用","许可协议","数据配置","安装进度","安装完成"};
 
-    private StatusModel(){
+    private StatusManager(){
 
     }
 
-    public static StatusModel getInstance(){
+    public static StatusManager getInstance(){
         if(instance == null){
-            instance = new StatusModel();
+            instance = new StatusManager();
         }
         return instance;
     }

@@ -2,7 +2,7 @@ package dsp.install.ui;
 
 import dsp.install.event.IStatusChangeListener;
 import dsp.install.event.StatusChangeEvent;
-import dsp.install.domain.StatusModel;
+import dsp.install.domain.StatusManager;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -16,7 +16,7 @@ import java.awt.*;
 public class RightPanel extends JPanel implements IStatusChangeListener{
     public RightPanel(){
         initUI();
-        StatusModel.getInstance().registeListener(this);
+        StatusManager.getInstance().registeListener(this);
     }
 
     private CardLayout cardLayout;

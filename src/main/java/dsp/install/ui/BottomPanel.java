@@ -1,11 +1,10 @@
 package dsp.install.ui;
 
 import dsp.install.domain.ConfigurationManager;
-import dsp.install.domain.StatusModel;
+import dsp.install.domain.StatusManager;
 import dsp.install.event.DspEvent;
 import dsp.install.event.EventBus;
 import dsp.install.event.IEventListener;
-import dsp.install.exception.DspException;
 
 import javax.swing.*;
 
@@ -56,12 +55,12 @@ public class BottomPanel extends JPanel implements IEventListener{
         );
 
         preButton.addActionListener((ActionEvent event) -> {
-            StatusModel.getInstance().previous();
+            StatusManager.getInstance().previous();
         });
 
         nextButton.addActionListener((ActionEvent event) -> {
             if(status == 0) {
-                StatusModel.getInstance().next();
+                StatusManager.getInstance().next();
             }else{
                 nextButton.setEnabled(false);
                 EventBus.getInstance().fireListeners(new DspEvent(DspEvent.DO_CONNECT_DB,null));

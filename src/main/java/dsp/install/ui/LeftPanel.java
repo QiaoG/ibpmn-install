@@ -2,7 +2,7 @@ package dsp.install.ui;
 
 import dsp.install.event.IStatusChangeListener;
 import dsp.install.event.StatusChangeEvent;
-import dsp.install.domain.StatusModel;
+import dsp.install.domain.StatusManager;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -20,10 +20,10 @@ import static javax.swing.LayoutStyle.ComponentPlacement.RELATED;
 public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeListener{
     public LeftPanel(){
         initUI();
-        StatusModel.getInstance().registeListener(this);
+        StatusManager.getInstance().registeListener(this);
     }
 
-    private JRadioButton[] jbs = new JRadioButton[StatusModel.STEPS.length];
+    private JRadioButton[] jbs = new JRadioButton[StatusManager.STEPS.length];
 
     private boolean lock;
 
@@ -36,9 +36,9 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
         gl.setAutoCreateContainerGaps(true);
 
         ButtonGroup bg = new ButtonGroup();
-        int stepc = StatusModel.STEPS.length;
+        int stepc = StatusManager.STEPS.length;
         for(int i = 0; i < stepc; i++){
-            jbs[i] = new JRadioButton(StatusModel.STEPS[i]);
+            jbs[i] = new JRadioButton(StatusManager.STEPS[i]);
             jbs[i].addChangeListener(this);
             bg.add(jbs[i]);
         }
@@ -69,13 +69,13 @@ public class LeftPanel extends JPanel implements ChangeListener, IStatusChangeLi
             lock = false;
         }else {
             lock = true;
-            jbs[StatusModel.getInstance().getCurrentStatus()].setSelected(true);
+            jbs[StatusManager.getInstance().getCurrentStatus()].setSelected(true);
         }
     }
 
     //@Override
     public void itemStateChanged(ItemEvent e) {
-        jbs[StatusModel.getInstance().getCurrentStatus()].setSelected(true);
+        jbs[StatusManager.getInstance().getCurrentStatus()].setSelected(true);
     }
 
     @Override
