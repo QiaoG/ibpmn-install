@@ -16,11 +16,15 @@ import java.util.List;
 * Author Mail:gq_200508@126.com
 * Date:2019/1/16
 * Time:8:13
+ *
+ * [Loaded sun.awt.AppContext$PostShutdownEventRunnable from F:\work\HiBPM\DSP\ibpmn-install\jre\lib\rt.jar]
+ * [Loaded sun.awt.AWTAutoShutdown$1 from F:\work\HiBPM\DSP\ibpmn-install\jre\lib\rt.jar]
+ * [Loaded java.util.IdentityHashMap$KeyIterator from F:\work\HiBPM\DSP\ibpmn-install\jre\lib\rt.jar]
 */
 public class ConfigurationManager {
 
     @Getter
-    private int profile = 0;
+    private int profile = 1;
 
     private final int RESOURCE_SEPARATE_NUM = 5;
 
