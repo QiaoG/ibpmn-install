@@ -3,6 +3,8 @@ package dsp.install.domain;
 import dsp.install.utils.ZipCipherUtil;
 import dsp.install.utils.ZipUtil;
 
+import java.io.File;
+
 /**
  * Author:GQ
  * Author Mail:gq_200508@126.com
@@ -19,7 +21,12 @@ public class TomcatCopyTask extends InstallTask{
     public void execute() throws Exception {
         ZipUtil zipUtil = new ZipUtil();
         ZipCipherUtil zcu = new ZipCipherUtil();
-        zcu.decryptUnzip("server.dsp",this.getDistDir(),"6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
+        String name = "server.dsp";
+        File tomcat = new File(name);
+        if(!tomcat.exists()){
+            name = "..\\"+name;
+        }
+        zcu.decryptUnzip(name,this.getDistDir(),"6u5fBBcJOVyZnd9CjbGBslUypGZFBp");
 
     }
 }

@@ -2,6 +2,8 @@ package dsp.install.domain;
 
 import dsp.install.utils.ZipCipherUtil;
 
+import java.io.File;
+
 /**
  * Author:GQ
  * Author Mail:gq_200508@126.com
@@ -23,6 +25,11 @@ public class ResourceUnzipTask extends InstallTask {
     @Override
     public void execute() throws Exception {
         ZipCipherUtil util = new ZipCipherUtil();
+
+        File r = new File(srcFile);
+        if(!r.exists()){
+            srcFile = "..\\"+srcFile;
+        }
 
         util.decryptUnzip(srcFile, this.getDistDir(), SECRE_KEY);
     }

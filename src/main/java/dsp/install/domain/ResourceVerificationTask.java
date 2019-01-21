@@ -29,7 +29,10 @@ public class ResourceVerificationTask extends InstallTask {
         for (String file : RESOURCE_FILES) {
             resource = new File(file);
             if(!resource.exists() || !resource.isFile()){
-                throw new DspException(file+"不存在！");
+                resource = new File("..\\"+file);
+                if(!resource.exists() || !resource.isFile()){
+                    throw new DspException(file+"不存在！");
+                }
             }
         }
     }

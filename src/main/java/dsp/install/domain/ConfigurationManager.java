@@ -31,7 +31,6 @@ public class ConfigurationManager {
     @Setter
     private File desktopDir;
 
-    @Getter
     private static ConfigurationManager instance;
 
     private final String TOMCAT_DIR_NAME = "apache-tomcat-8.5.37";

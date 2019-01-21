@@ -15,7 +15,6 @@ import java.util.List;
 */
 @Data
 public class StatusManager {
-    @Getter
     private static StatusManager instance;
 
     //"安装选项",

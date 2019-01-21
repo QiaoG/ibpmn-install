@@ -12,7 +12,6 @@ import java.text.MessageFormat;
 * Date:2019/1/14
 * Time:16:52
 */
-@Data
 public class ConfigurationOfOracle extends ConfigurationOfJDBC{
 
     @Override
