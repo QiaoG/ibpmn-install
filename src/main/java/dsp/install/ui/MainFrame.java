@@ -14,27 +14,31 @@ import java.awt.event.WindowEvent;
 */
 public class MainFrame extends JFrame {
     public MainFrame() {
+
         String lookAndFeel = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
         String lookAndFeel2 = UIManager.getCrossPlatformLookAndFeelClassName();
-        try {
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (UnsupportedLookAndFeelException e) {
+
+        if(PerformanceModel.getInstance().isWindows()) {
             try {
-                UIManager.setLookAndFeel(lookAndFeel2);
-            } catch (ClassNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (InstantiationException e1) {
-                e1.printStackTrace();
-            } catch (IllegalAccessException e1) {
-                e1.printStackTrace();
-            } catch (UnsupportedLookAndFeelException e1) {
-                e1.printStackTrace();
+                UIManager.setLookAndFeel(lookAndFeel);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (UnsupportedLookAndFeelException e) {
+                try {
+                    UIManager.setLookAndFeel(lookAndFeel2);
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                } catch (InstantiationException e1) {
+                    e1.printStackTrace();
+                } catch (IllegalAccessException e1) {
+                    e1.printStackTrace();
+                } catch (UnsupportedLookAndFeelException e1) {
+                    e1.printStackTrace();
+                }
             }
         }
         //UIManager.setLookAndFeel(lookAndFeel);
@@ -57,7 +61,7 @@ public class MainFrame extends JFrame {
     }
 
     private void initUI() {
-        setPreferredSize(new Dimension(PerformanceModel.getInstance().W_WIDE, PerformanceModel.getInstance().W_HIGHT));
+        setPreferredSize(new Dimension(PerformanceModel.getInstance().getFrameWidth(), PerformanceModel.getInstance().getFrameHight()));
 
         Container cpane = getContentPane();
         GroupLayout gl = new GroupLayout(cpane);
@@ -72,9 +76,9 @@ public class MainFrame extends JFrame {
         JPanel right = new RightPanel();
         JPanel bottom = new BottomPanel();
 
-        int toph = PerformanceModel.getInstance().TOP_HIGHT;
-        int leftw = PerformanceModel.getInstance().LEFT_WIDE;
-        int bottomh = PerformanceModel.getInstance().BOTTOM_HIGHT;
+        int toph = PerformanceModel.getInstance().getTopHight();
+        int leftw = PerformanceModel.getInstance().getLeftWidth();
+        int bottomh = PerformanceModel.getInstance().getBottomHight();
         gl.setHorizontalGroup(gl.createParallelGroup()
                 .addComponent(top)
                 .addGroup(gl.createSequentialGroup()

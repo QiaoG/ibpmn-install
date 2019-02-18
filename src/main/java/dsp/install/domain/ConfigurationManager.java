@@ -140,9 +140,12 @@ public class ConfigurationManager {
     }
 
     public static void main(String[] args) {
-        ConfigurationManager.getInstance().createJDBCConfiguraion(false);
-        ConfigurationManager.getInstance().setDistDir("F:\\work\\HiBPM\\dsp-resource\\tomcat");
-        ConfigurationManager.getInstance().initTasks();
-        ConfigurationManager.getInstance().exexuteAllTask();
+//        ConfigurationManager.getInstance().createJDBCConfiguraion(false);
+//        ConfigurationManager.getInstance().setDistDir("F:\\work\\HiBPM\\dsp-resource\\tomcat");
+//        ConfigurationManager.getInstance().initTasks();
+//        ConfigurationManager.getInstance().exexuteAllTask();
+
+        String os = System.getProperty("os.name");
+        System.out.println(os.contains("Windows"));
     }
 }
